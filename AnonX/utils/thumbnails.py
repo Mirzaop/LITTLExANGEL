@@ -15,11 +15,6 @@ from config import YOUTUBE_IMG_URL
 def make_col():
     return (random.randint(0,255),random.randint(0,255),random.randint(0,255))
 
-def remove_non_ascii(text):
-    new_val = text.encode("ascii", "ignore")
-    updated_str = new_val.decode()
-    return updated_str
-
 def changeImageSize(maxWidth, maxHeight, image):
     widthRatio = maxWidth / image.size[0]
     heightRatio = maxHeight / image.size[1]
@@ -54,7 +49,7 @@ async def gen_thumb(videoid):
                 try:
                     title = result["title"]
                     title = re.sub("\W+", " ", title)
-                    title = remove_non_ascii(title.title())
+                    title = title.title()
                 except:
                     title = "Unsupported Title"
                 try:
@@ -67,7 +62,7 @@ async def gen_thumb(videoid):
                 except:
                     views = "Unknown Views"
                 try:
-                    channel = remove_non_ascii(result["channel"]["name"])
+                    channel = result["channel"]["name"]
                 except:
                     channel = "Unknown Channel"
 
@@ -126,7 +121,7 @@ async def gen_thumb(videoid):
             font4 = ImageFont.truetype('assets/font2.ttf', 35)
 
             image4 = ImageDraw.Draw(image2)
-            image4.text((10, 10), "FALLEN MUSIC", fill="white", font = font1, align ="left") 
+            image4.text((10, 10), "LITTLE ANGEL", fill="white", font = font1, align ="left") 
             image4.text((670, 150), "NOW PLAYING", fill="white", font = font2, stroke_width=2, stroke_fill="white", align ="left") 
 
             # title
@@ -152,4 +147,4 @@ async def gen_thumb(videoid):
             return file
     except Exception as e:
         print(e)
-        return "YOUTUBE_IMG_URL"
+        return YOUTUBE_IMG_URL
